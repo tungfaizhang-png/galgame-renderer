@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galgame Renderer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Galgame 主容器 -->
+    <div id="galgame-container">
+        <!-- 背景层 -->
+        <div id="background-layer"></div>
+        
+        <!-- 角色层 -->
+        <div id="character-layer">
+            <div id="char-left" class="character"></div>
+            <div id="char-center" class="character"></div>
+            <div id="char-right" class="character"></div>
+        </div>
+        
+        <!-- 对话框层 -->
+        <div id="dialog-layer">
+            <div id="dialog-box">
+                <div id="speaker-name"></div>
+                <div id="dialog-text"></div>
+                <div id="click-indicator">▼</div>
+            </div>
+        </div>
+        
+        <!-- UI 控制层 -->
+        <div id="ui-layer">
+            <button id="btn-auto" class="ui-btn" title="自动播放">Auto</button>
+            <button id="btn-skip" class="ui-btn" title="跳过">Skip</button>
+            <button id="btn-log" class="ui-btn" title="历史记录">Log</button>
+            <button id="btn-settings" class="ui-btn" title="设置">⚙</button>
+        </div>
+        
+        <!-- 历史记录面板 -->
+        <div id="history-panel" class="panel hidden">
+            <div class="panel-header">
+                <h3>历史记录</h3>
+                <button class="close-btn" onclick="toggleHistory()">×</button>
+            </div>
+            <div id="history-content"></div>
+        </div>
+        
+        <!-- 设置面板 -->
+        <div id="settings-panel" class="panel hidden">
+            <div class="panel-header">
+                <h3>设置</h3>
+                <button class="close-btn" onclick="toggleSettings()">×</button>
+            </div>
+            <div class="settings-content">
+                <div class="setting-item">
+                    <label>文字速度</label>
+                    <input type="range" id="text-speed" min="10" max="100" value="50">
+                </div>
+                <div class="setting-item">
+                    <label>自动播放速度</label>
+                    <input type="range" id="auto-speed" min="1000" max="5000" value="3000">
+                </div>
+                <div class="setting-item">
+                    <label>BGM 音量</label>
+                    <input type="range" id="bgm-volume" min="0" max="100" value="50">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 音频元素 -->
+    <audio id="bgm-player" loop></audio>
+    <audio id="sfx-player"></audio>
+    
+    <script src="config.js"></script>
+    <script src="renderer.js"></script>
+</body>
+</html>

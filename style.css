@@ -1,0 +1,424 @@
+/* ========================================
+   Galgame Renderer - 样式表
+   ======================================== */
+
+/* 重置样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Microsoft YaHei', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+    overflow: hidden;
+    background: #000;
+}
+
+/* ========================================
+   主容器
+   ======================================== */
+#galgame-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+}
+
+/* iframe 内嵌时的样式调整 */
+@media (max-height: 500px) {
+    #galgame-container {
+        height: 400px;
+    }
+}
+
+/* ========================================
+   背景层
+   ======================================== */
+#background-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: opacity 0.5s ease-in-out;
+    z-index: 1;
+}
+
+#background-layer.fade {
+    opacity: 0;
+}
+
+/* ========================================
+   角色层
+   ======================================== */
+#character-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.character {
+    position: absolute;
+    bottom: 0;
+    width: 40%;
+    height: 90%;
+    background-size: contain;
+    background-position: bottom center;
+    background-repeat: no-repeat;
+    transition: all 0.3s ease-out;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.character.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.character.speaking {
+    filter: brightness(1.1);
+    transform: scale(1.02);
+}
+
+.character.dim {
+    filter: brightness(0.7);
+}
+
+#char-left {
+    left: 5%;
+}
+
+#char-center {
+    left: 30%;
+}
+
+#char-right {
+    right: 5%;
+}
+
+/* ========================================
+   对话框层
+   ======================================== */
+#dialog-layer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    z-index: 10;
+}
+
+#dialog-box {
+    position: relative;
+    background: linear-gradient(180deg, 
+        rgba(0, 0, 0, 0.85) 0%, 
+        rgba(20, 20, 40, 0.95) 100%);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 20px 25px;
+    min-height: 120px;
+    box-shadow: 
+        0 0 30px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+#dialog-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(100, 150, 255, 0.5) 50%, 
+        transparent 100%);
+}
+
+#speaker-name {
+    position: absolute;
+    top: -15px;
+    left: 20px;
+    background: linear-gradient(135deg, #4a6fa5 0%, #166d8a 100%);
+    color: #fff;
+    padding: 5px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    min-width: 80px;
+    text-align: center;
+}
+
+#speaker-name:empty {
+    display: none;
+}
+
+#dialog-text {
+    color: #fff;
+    font-size: 18px;
+    line-height: 1.8;
+    padding-top: 10px;
+    min-height: 60px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+#click-indicator {
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
+    animation: bounce 1s ease-in-out infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(5px); }
+}
+
+/* ========================================
+   UI 控制层
+   ======================================== */
+#ui-layer {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 8px;
+    z-index: 20;
+}
+
+.ui-btn {
+    background: rgba(0, 0, 0, 0.6);
+    color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(5px);
+}
+
+.ui-btn:hover {
+    background: rgba(100, 150, 255, 0.3);
+    border-color: rgba(100, 150, 255, 0.5);
+    color: #fff;
+}
+
+.ui-btn.active {
+    background: rgba(100, 150, 255, 0.5);
+    border-color: rgba(100, 150, 255, 0.8);
+}
+
+/* ========================================
+   面板样式
+   ======================================== */
+.panel {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(20, 20, 40, 0.98);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    width: 80%;
+    max-width: 500px;
+    max-height: 70%;
+    overflow: hidden;
+    z-index: 100;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.panel.hidden {
+    display: none;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.panel-header h3 {
+    color: #fff;
+    font-size: 16px;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 24px;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.close-btn:hover {
+    color: #fff;
+}
+
+/* 历史记录内容 */
+#history-content {
+    padding: 15px 20px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.history-item {
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.history-item .speaker {
+    color: #6fa5d4;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.history-item .text {
+    color: #fff;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* 设置内容 */
+.settings-content {
+    padding: 20px;
+}
+
+.setting-item {
+    margin-bottom: 20px;
+}
+
+.setting-item label {
+    display: block;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.setting-item input[type="range"] {
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.2);
+    outline: none;
+    -webkit-appearance: none;
+}
+
+.setting-item input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #6fa5d4;
+    cursor: pointer;
+}
+
+/* ========================================
+   打字机效果
+   ======================================== */
+.typing-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    background: rgba(255, 255, 255, 0.8);
+    margin-left: 2px;
+    animation: blink 0.7s ease-in-out infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* ========================================
+   过渡动画
+   ======================================== */
+.fade-in {
+    animation: fadeIn 0.5s ease-out;
+}
+
+.fade-out {
+    animation: fadeOut 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+/* ========================================
+   响应式设计
+   ======================================== */
+@media (max-width: 768px) {
+    #dialog-box {
+        padding: 15px 18px;
+        min-height: 100px;
+    }
+    
+    #dialog-text {
+        font-size: 15px;
+    }
+    
+    #speaker-name {
+        font-size: 12px;
+        padding: 4px 15px;
+    }
+    
+    .character {
+        width: 50%;
+    }
+    
+    #ui-layer {
+        top: 5px;
+        right: 5px;
+        gap: 5px;
+    }
+    
+    .ui-btn {
+        padding: 6px 10px;
+        font-size: 11px;
+    }
+}
+
+/* ========================================
+   滚动条样式
+   ======================================== */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
